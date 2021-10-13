@@ -1,0 +1,33 @@
+name: Generate Screenshots
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  generate-screenshots:
+    name: Generate Screenshots
+    runs-on: macos-11
+
+    steps:
+      - name: 'Setup ruby'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true 
+      - name: 'Install ImageMagick'
+        run: brew install imagemagick
+      - name: Select Xcode verison
+        run: |
+          sudo xcode-select -s /Applications/Xcode_13.0.app
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - uses: maierj/fastlane-action@v2.0.1
+        with:
+          lane: 'screenshots'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: fastlane/screenshots/**/*.png
