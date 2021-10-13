@@ -19,6 +19,7 @@
 #   ["pt", "pt_BR"] # Portuguese with Brazilian locale
  ])
 headless(false)
+disable_slide_to_type(true)
 
 # The name of the scheme which contains the UI Tests
 # scheme("SchemeName")
